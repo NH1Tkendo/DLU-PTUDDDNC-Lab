@@ -1,0 +1,100 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Test 1
+      id: test-1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 1
+        setup-command: npm install && npm install -g @angular/cli
+        command: curl -sL https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/d004d561b2c692485abcc4a43eb171642e99e146/test-1-structure.js
+          -o t1.js && node t1.js
+        timeout: 10
+        max-score: 2
+    - name: Test 2
+      id: test-2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 2
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/d004d561b2c692485abcc4a43eb171642e99e146/test-2-binding.js
+          -o t2.js && node t2.js
+        timeout: 10
+        max-score: 1
+    - name: Test 3
+      id: test-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 3
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/d004d561b2c692485abcc4a43eb171642e99e146/test-3-navigation.js
+          -o t3.js && node t3.js
+        timeout: 10
+        max-score: 1
+    - name: Test 4
+      id: test-4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 4
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/d004d561b2c692485abcc4a43eb171642e99e146/test-4-logic.js
+          -o t4.js && node t4.js
+        timeout: 10
+        max-score: 1
+    - name: Test 5
+      id: test-5
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 5
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/d004d561b2c692485abcc4a43eb171642e99e146/test-5-oop.js
+          -o t5.js && node t5.js
+        timeout: 10
+        max-score: 1
+    - name: Test 6
+      id: test-6
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 6
+        setup-command: ''
+        command: curl -L https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/be7498093fe276389dc76af2427c15d90332fcb4/test-6-strict.ts
+          -o src/app/strict-grading.spec.ts && ng test --include=src/app/strict-grading.spec.ts
+          --watch=false --browsers=ChromeHeadless
+        timeout: 10
+        max-score: 2
+    - name: Test 7
+      id: test-7
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 7
+        setup-command: ''
+        command: curl -L https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/be7498093fe276389dc76af2427c15d90332fcb4/test-7-advanced.ts
+          -o src/app/strict-grading.spec.ts && curl -L https://gist.github.com/quocthang0507/8beba1d3498f69db9b531814bc48f838/raw/be7498093fe276389dc76af2427c15d90332fcb4/test-7-advanced.ts
+          -o src/app/advanced-interaction.spec.ts && ng test --include=src/app/strict-grading.spec.ts
+          --include=src/app/advanced-interaction.spec.ts --watch=false --browsers=ChromeHeadless
+        timeout: 10
+        max-score: 2
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST-1_RESULTS: "${{steps.test-1.outputs.result}}"
+        TEST-2_RESULTS: "${{steps.test-2.outputs.result}}"
+        TEST-3_RESULTS: "${{steps.test-3.outputs.result}}"
+        TEST-4_RESULTS: "${{steps.test-4.outputs.result}}"
+        TEST-5_RESULTS: "${{steps.test-5.outputs.result}}"
+        TEST-6_RESULTS: "${{steps.test-6.outputs.result}}"
+        TEST-7_RESULTS: "${{steps.test-7.outputs.result}}"
+      with:
+        runners: test-1,test-2,test-3,test-4,test-5,test-6,test-7

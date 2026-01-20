@@ -1,0 +1,16 @@
+// For information on how to create your own theme, please refer to:
+// https://ionicframework.com/docs/theming/
+
+:root {
+  /* Primary brand color (customized) */
+  --ion-color-primary: #ff6b6b;
+  --ion-color-primary-rgb: 255, 107, 107;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #e65a5a;
+  --ion-color-primary-tint: #ff7b7b;
+
+  /* You can customize other color roles similarly */
+  --ion-color-secondary: #3dc2ff;
+  --ion-color-tertiary: #7044ff;
+}
