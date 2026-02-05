@@ -1,0 +1,179 @@
+.summary-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+
+  .summary-card {
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    ion-card-header {
+      padding-bottom: 8px;
+
+      ion-card-subtitle {
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    ion-card-content {
+      padding-top: 0;
+
+      .amount {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 20px;
+        font-weight: 700;
+
+        ion-icon {
+          font-size: 28px;
+        }
+
+        &.income-amount {
+          color: var(--ion-color-success);
+        }
+
+        &.expense-amount {
+          color: var(--ion-color-danger);
+        }
+
+        &.positive-balance {
+          color: var(--ion-color-success);
+        }
+
+        &.negative-balance {
+          color: var(--ion-color-danger);
+        }
+      }
+    }
+
+    &.balance-card {
+      background: linear-gradient(
+        135deg,
+        var(--ion-color-primary),
+        var(--ion-color-primary-shade)
+      );
+      color: white;
+
+      ion-card-subtitle {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .amount {
+        color: white;
+      }
+    }
+  }
+}
+
+.controls-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  ion-segment {
+    flex: 1;
+    max-width: 300px;
+  }
+
+  .sort-button {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    height: 40px;
+  }
+}
+
+.transactions-section {
+  .section-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--ion-color-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    ion-badge {
+      font-size: 12px;
+    }
+  }
+
+  ion-list {
+    background: transparent;
+    padding: 0;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+
+    .empty-icon {
+      font-size: 80px;
+      color: var(--ion-color-medium);
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    p {
+      font-size: 16px;
+      color: var(--ion-color-medium);
+      margin: 0;
+    }
+  }
+}
+
+ion-fab {
+  margin-bottom: 16px;
+  margin-right: 16px;
+
+  ion-fab-button {
+    --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Responsive design
+@media (max-width: 576px) {
+  .summary-section {
+    grid-template-columns: 1fr;
+  }
+
+  .controls-section {
+    flex-direction: column;
+    align-items: stretch;
+
+    ion-segment {
+      max-width: 100%;
+    }
+
+    .sort-button {
+      width: 100%;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ion-card,
+app-transaction-item {
+  animation: fadeIn 0.3s ease-out;
+}

@@ -1,0 +1,7 @@
+{
+  "name": "2212453-lab3",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

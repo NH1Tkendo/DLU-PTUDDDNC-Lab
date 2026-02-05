@@ -1,0 +1,76 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Money Tracker</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Money Tracker</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card color="primary">
+          <ion-card-header>
+            <ion-card-title>Số dư hiện tại</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h2>{{ balance | currency:'VND':'symbol' }}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-segment [(ngModel)]="type">
+          <ion-segment-button value="income">Thu nhập</ion-segment-button>
+          <ion-segment-button value="expense">Chi tiêu</ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Tên</ion-label>
+          <ion-input [(ngModel)]="name"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">Số tiền</ion-label>
+          <ion-input type="number" [(ngModel)]="amount"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" (click)="onAdd()">Thêm</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item *ngFor="let t of transactions">
+            <ion-label>
+              <h2>{{ t.name }}</h2>
+              <p>{{ t.date | date:'dd/MM/yyyy' }}</p>
+              <p [class.income]="t.type === 'income'" [class.expense]="t.type === 'expense'">{{ t.amount | currency:'VND':'symbol' }}</p>
+            </ion-label>
+            <app-transaction-item [transaction]="t" (remove)="onDelete($event)"></app-transaction-item>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

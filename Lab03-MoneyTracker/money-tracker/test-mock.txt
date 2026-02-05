@@ -1,0 +1,7 @@
+@Component({
+  selector: 'app-transaction-item',
+  template: '<div class="mock-item">{{transaction?.amount}}</div>'
+})
+class MockTransactionItemComponent {
+  @Input() transaction: any;
+}
