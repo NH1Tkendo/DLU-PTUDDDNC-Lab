@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      @if (username) {
+        Xin chào, {{ username }}
+      } @else {
+        Pro Task
+      }
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Lưu tên người dùng (Ionic Storage) -->
+  <ion-item>
+    <ion-label position="stacked">Tên của bạn</ion-label>
+    <input type="text" [formControl]="usernameControl" placeholder="Nhập tên..." />
+  </ion-item>
+  <ion-button expand="block" class="ion-margin" (click)="onSaveName()">
+    Lưu tên
+  </ion-button>
+
+  <!-- Tìm kiếm thông minh (RxJS Debounce) -->
+  <ion-item>
+    <input type="text" [formControl]="searchControl" placeholder="Tìm kiếm công việc..." />
+  </ion-item>
+
+  <!-- Danh sách Todos -->
+  <ion-list>
+    @for (item of filteredTodos; track item.id) {
+      <ion-item>
+        <ion-checkbox slot="start" [checked]="item.completed"></ion-checkbox>
+        <ion-label [class.completed]="item.completed">
+          {{ item.title }}
+        </ion-label>
+      </ion-item>
+    }
+    @if (filteredTodos.length === 0 && allTodos.length > 0) {
+      <ion-item>
+        <ion-label>Không tìm thấy kết quả.</ion-label>
+      </ion-item>
+    }
+  </ion-list>
+
+  <!-- Form thêm Todo mới (Reactive Forms) -->
+  <form
+    [formGroup]="todoForm"
+    (ngSubmit)="onSubmit()"
+    class="ion-padding"
+  >
+    <ion-item>
+      <ion-label position="stacked">Tiêu đề công việc</ion-label>
+      <input type="text" formControlName="title" placeholder="Nhập tên việc..." />
+    </ion-item>
+
+    @if (todoForm.get('title')?.invalid && todoForm.get('title')?.touched) {
+      <ion-text color="danger">
+        <p style="padding-left: 16px; margin-top: 5px; font-size: small;">
+          * Tiêu đề là bắt buộc và phải trên 5 ký tự.
+        </p>
+      </ion-text>
+    }
+
+    <ion-button
+      expand="block"
+      type="submit"
+      class="ion-margin"
+    >Thêm công việc</ion-button>
+  </form>
+
+</ion-content>

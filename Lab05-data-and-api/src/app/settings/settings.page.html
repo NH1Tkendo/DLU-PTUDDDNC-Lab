@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cài đặt</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h2>Xin chào, {{ currentName || 'Khách' }}</h2>
+
+  <ion-item>
+    <ion-label position="stacked">Tên của bạn</ion-label>
+    <ion-input [(ngModel)]="nameInput" placeholder="Nhập tên..."></ion-input>
+  </ion-item>
+
+  <ion-button expand="block" class="ion-margin" (click)="saveName(nameInput)">
+    Lưu tên
+  </ion-button>
+</ion-content>
