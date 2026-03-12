@@ -1,0 +1,90 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Test 1
+      id: test-1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 1
+        setup-command: npm install
+        command: npx ng build
+        timeout: 5
+        max-score: 1
+    - name: Test 2
+      id: test-2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 2
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/dca6f14a78f0e8720611ae0bfe790011/raw/8326b10ca60491119de8955d853db28263238322/Test%25201.ts
+          -o src/app/services/places.service.spec.ts && npx ng test --watch=false
+          --browsers=ChromeHeadless --include src/app/services/places.service.spec.ts
+        timeout: 2
+        max-score: 2
+    - name: Test 3
+      id: test-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 3
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/dca6f14a78f0e8720611ae0bfe790011/raw/8326b10ca60491119de8955d853db28263238322/Test%25202.ts
+          -o src/app/tab1/tab1.page.spec.ts && npx ng test --watch=false --browsers=ChromeHeadless
+          --include src/app/tab1/tab1.page.spec.ts
+        timeout: 2
+        max-score: 3
+    - name: Test 4
+      id: test-4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 4
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/dca6f14a78f0e8720611ae0bfe790011/raw/8326b10ca60491119de8955d853db28263238322/Test%25203.ts
+          -o src/app/pages/place-detail/place-detail.page.spec.ts && npx ng test --watch=false
+          --browsers=ChromeHeadless --include src/app/pages/place-detail/place-detail.page.spec.ts
+        timeout: 2
+        max-score: 2
+    - name: Test 5
+      id: test-5
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 5
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/dca6f14a78f0e8720611ae0bfe790011/raw/8326b10ca60491119de8955d853db28263238322/Test%25204.ts
+          -o src/app/app-routing.module.spec.ts && npx ng test --watch=false --browsers=ChromeHeadless
+          --include src/app/app-routing.module.spec.ts
+        timeout: 2
+        max-score: 1
+    - name: Test 6
+      id: test-6
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Test 6
+        setup-command: ''
+        command: curl -sL https://gist.github.com/quocthang0507/dca6f14a78f0e8720611ae0bfe790011/raw/08a5aae860f098e576f219a548eaac33b47d3706/Test%25205.ts
+          -o src/app/tab1/code-quality.spec.ts && npx ng test --watch=false --browsers=ChromeHeadless
+          --include src/app/tab1/code-quality.spec.ts
+        timeout: 2
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        TEST-1_RESULTS: "${{steps.test-1.outputs.result}}"
+        TEST-2_RESULTS: "${{steps.test-2.outputs.result}}"
+        TEST-3_RESULTS: "${{steps.test-3.outputs.result}}"
+        TEST-4_RESULTS: "${{steps.test-4.outputs.result}}"
+        TEST-5_RESULTS: "${{steps.test-5.outputs.result}}"
+        TEST-6_RESULTS: "${{steps.test-6.outputs.result}}"
+      with:
+        runners: test-1,test-2,test-3,test-4,test-5,test-6

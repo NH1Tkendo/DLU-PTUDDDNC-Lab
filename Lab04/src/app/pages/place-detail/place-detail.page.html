@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1" text="Quay lại"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ place?.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Collapsible header hiệu ứng mờ dần khi cuộn -->
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ place?.title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ng-container *ngIf="place">
+    <!-- Swiper Slideshow -->
+    <swiper-container
+      [slidesPerView]="1"
+      [pagination]="true"
+      [loop]="true"
+      class="place-swiper">
+      <swiper-slide *ngFor="let img of place.images">
+        <img [src]="img" alt="{{ place.title }}" class="slide-img" />
+      </swiper-slide>
+    </swiper-container>
+
+    <!-- Thông tin địa điểm -->
+    <div class="place-info">
+      <div class="rating-row">
+        <ion-icon name="star" color="warning"></ion-icon>
+        <span class="rating-text">{{ place.rating }} / 5</span>
+      </div>
+
+      <div class="location-row" *ngIf="place.location">
+        <ion-icon name="location-outline" color="primary"></ion-icon>
+        <span>{{ place.location }}</span>
+      </div>
+
+      <h2 class="section-title">Mô tả</h2>
+      <p class="description">{{ place.description }}</p>
+
+      <h2 class="section-title">Giá vé</h2>
+      <p class="price">{{ place.price | currency:'VND':'symbol':'1.0-0' }}</p>
+    </div>
+  </ng-container>
+</ion-content>
+
+<!-- Footer cố định với nút đặt tour gradient -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" class="book-btn">
+      Đặt Tour Ngay
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+

@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Việt Nam Tươi Đẹp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding-top">
+
+  <!-- Sử dụng Grid -->
+  <ion-grid>
+    <ion-row>
+      <!-- size="12": Mobile chiếm hết chiều ngang
+           size-md="6": Tablet/Desktop chiếm 1/2 chiều ngang (2 cột) -->
+      <ion-col size="12" size-md="6" *ngFor="let place of places">
+
+        <!-- Sử dụng Card để hiển thị thông tin -->
+        <ion-card class="place-card">
+          <img [src]="place.images?.[0] || place.image" alt="Place Image" />
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-icon name="star" color="warning"></ion-icon> {{ place.rating }}
+            </ion-card-subtitle>
+            <ion-card-title>{{ place.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Giá vé từ: {{ place.price | currency:'VND' }}</p>
+          </ion-card-content>
+
+          <!-- Nút bấm sử dụng sự kiện click (sẽ xử lý ở phần sau) -->
+          <ion-button expand="full" fill="clear" (click)="goToDetail(place.id)">
+            Xem chi tiết
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </ion-card>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
